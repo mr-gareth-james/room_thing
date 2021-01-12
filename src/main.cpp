@@ -7,12 +7,6 @@ const char* fingerpr = "6E 16 48 FC FA 80 B6 83 3F 1F AD C1 9F FB CD F5 E9 33 38
 const char* ssid = "Wavey Davey"; // Home wifi!!!
 const char* password = "HDAKD7YC"; // password
 
-//const char* ssid = "Brilliant Noise Guest";
-//const char* password = "Adv0c4cy";
-
-//const char* ssid = "virginmedia8520225";
-//const char* password = "xxqwnths";
-
 const char* getURL = "https://thefinds.co.uk/dev/room/index.php";
 
 int ledPin1 = D1; int ledPin2 = D2;
