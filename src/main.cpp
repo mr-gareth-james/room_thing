@@ -1,6 +1,9 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 
+//SHA1 finger print of certificate – use web browser to view and copy
+const char* fingerpr = "6E 16 48 FC FA 80 B6 83 3F 1F AD C1 9F FB CD F5 E9 33 38 70";
+
 const char* ssid = "Wavey Davey"; // Home wifi!!!
 const char* password = "HDAKD7YC"; // password
 
@@ -10,7 +13,7 @@ const char* password = "HDAKD7YC"; // password
 //const char* ssid = "virginmedia8520225";
 //const char* password = "xxqwnths";
 
-const char* getURL = "http://thefinds.co.uk/dev/room/index.php";
+const char* getURL = "https://thefinds.co.uk/dev/room/index.php";
 
 int ledPin1 = D1; int ledPin2 = D2;
 int l1 = 1; int l2 = 1;
@@ -54,15 +57,24 @@ void setup() {
   Serial.println("Server started"); Serial.print("Use this URL to connect: "); Serial.print("http://"); Serial.print(WiFi.localIP()); Serial.println("/");
 }
 //____________________________________________________________________________________________________________________
+void check_room2(){
+
+
+}
 
 void check_room(){
   Serial.println("checking room");
   if (WiFi.status() == WL_CONNECTED) {        // Check WiFi connection status
       Serial.print("sending get");
-      WiFiClient client;
+
+      WiFiClientSecure client;
+      client.setInsecure(); //the magic line, use with caution, switches off ssl
+      client.connect(getURL, 80);
+
       HTTPClient http;                        // Declare an object of class HTTPClient
       http.begin(client, getURL);                     // Specify request destination
       int httpCode = http.GET();              // Send the request
+      
       if (httpCode > 0) {                     // Check the returning code
         String payload = http.getString();    // Get the request response payload
         roomState = payload;
