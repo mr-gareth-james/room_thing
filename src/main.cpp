@@ -22,7 +22,7 @@ int buttonLightPhase = 0;
 
 String roomState = "";
 unsigned long loopTimer     = millis();
-unsigned long loopTimerLen  = (unsigned long)30000;
+unsigned long loopTimerLen  = (unsigned long)300000;
 
 WiFiServer server(80);
 
