@@ -32,7 +32,7 @@ WiFiServer server(80);
 //____________________________________________________________________________________________________________________
 
 void setup() {
-  Serial.begin(115200); delay(10);
+  Serial.begin(9600); delay(10);
   pinMode(ledPin1, OUTPUT); digitalWrite(ledPin1, LOW); // light off at start
   pinMode(ledPin2, OUTPUT); digitalWrite(ledPin2, LOW);
   pinMode(buttonPin, INPUT);
@@ -59,8 +59,9 @@ void check_room(){
   Serial.println("checking room");
   if (WiFi.status() == WL_CONNECTED) {        // Check WiFi connection status
       Serial.print("sending get");
+      WiFiClient client;
       HTTPClient http;                        // Declare an object of class HTTPClient
-      http.begin(getURL);                     // Specify request destination
+      http.begin(client, getURL);                     // Specify request destination
       int httpCode = http.GET();              // Send the request
       if (httpCode > 0) {                     // Check the returning code
         String payload = http.getString();    // Get the request response payload
@@ -82,8 +83,13 @@ void check_room(){
           l1 = 0; l2 = 0;       
           digitalWrite(ledPin1, LOW); digitalWrite(ledPin2, LOW);
         }
+      }else{
+        Serial.println("http failed: "+httpCode);
       }
       http.end(); // Close connection
+      Serial.println("http end"+httpCode);
+  }else{
+    Serial.println("no wifi");
   }
 }
 //____________________________________________________________________________________________________________________
