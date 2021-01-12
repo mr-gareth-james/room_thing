@@ -24,8 +24,8 @@ float buttonLightCounter = 0;
 int buttonLightPhase = 0;
 
 String roomState = "";
-int loopTimer     = millis();
-int loopTimerLen  = 30000;
+unsigned long loopTimer     = millis();
+unsigned long loopTimerLen  = (unsigned long)30000;
 
 WiFiServer server(80);
 
@@ -111,9 +111,10 @@ void button_press(){
   Serial.println("pressed function");
   if (WiFi.status() == WL_CONNECTED) {        //Check WiFi connection status
       Serial.print("sending get request.");
+      WiFiClient client;
       HTTPClient http;                        //Declare an object of class HTTPClient
       //Specify request destination
-      http.begin("http://18.188.146.164:3000/book");
+      http.begin(client, "http://18.188.146.164:3000/book");
       
       int httpCode = http.GET();              //Send the request
       if (httpCode > 0) {                     //Check the returning code
